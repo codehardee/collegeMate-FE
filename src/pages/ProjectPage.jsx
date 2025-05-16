@@ -21,6 +21,8 @@ const ProjectPage = () => {
 
   // ✅ Fetch projects on load
   useEffect(() => {
+    console.log("🔐 Token being sent:");
+    console.log("🔐 Token being sent:", token);
     fetch('http://127.0.0.1:8000/api/uploadProject/projects/', {
       headers: { 'Authorization': `Bearer ${token}` },
     })
