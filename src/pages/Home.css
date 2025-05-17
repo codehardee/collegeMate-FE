@@ -5,7 +5,9 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
   font-family: 'Poppins', sans-serif;
   background-color: #f9f9f9;
   color: #222;
@@ -13,6 +15,7 @@ body {
 
 /* HERO SECTION */
 .hero {
+  
   background: linear-gradient(135deg, #083d77, #00509e);
   color: #fff;
   text-align: center;
@@ -20,8 +23,9 @@ body {
 }
 
 .hero h1 {
+  margin-top: 140px;
   font-size: 3rem;
-  margin-bottom: 15px;
+  margin-bottom: 28px;
 }
 
 .hero p {
@@ -169,8 +173,8 @@ body {
 .image-text-section {
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
-  padding: 60px 20px;
+  gap: 20px;
+  padding: 60px 15px;
   background: #f9f9f9;
 }
 
