@@ -3,6 +3,9 @@
 import React, { useState } from 'react';
 import './SignUpLoginPage.css';
 
+
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
     first_name: '',
@@ -20,23 +23,26 @@ const SignUpPage = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setSuccess('');
+  e.preventDefault();
+  setError('');
+  setSuccess('');
 
-    try {
-      const res = await fetch('http://127.0.0.1:8000/api/authentication/signup/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+  try {
+    const res = await fetch(`${BASE_URL}/api/authentication/signup/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
 
-      if (!res.ok) throw new Error(`Signup failed: ${res.status}`);
-      setSuccess('Signup successful! Please log in.');
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+    if (!res.ok) throw new Error(`Signup failed: ${res.status}`);
+    setSuccess('Signup successful! Please log in.');
+  } catch (err) {
+    setError(err.message);
+  }
+};
+
+
+     
 
   return (
     <div className="form-page-container">
