@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 import { saveTokens } from '../authHelpers';
 import './SignUpLoginPage.css';
 
+
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const LoginPage = () => {
   const [studentId, setStudentId] = useState('');
   const [password, setPassword] = useState('');
@@ -11,26 +14,26 @@ const LoginPage = () => {
   const [success, setSuccess] = useState('');
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setSuccess('');
+  e.preventDefault();
+  setError('');
+  setSuccess('');
 
-    try {
-      const res = await fetch('http://127.0.0.1:8000/api/token/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ student_id: studentId, password }),
-      });
+  try {
+    const res = await fetch(`${BASE_URL}/api/token/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ student_id: studentId, password }),
+    });
 
-      if (!res.ok) throw new Error(`Login failed: ${res.status}`);
+    if (!res.ok) throw new Error(`Login failed: ${res.status}`);
 
-      const data = await res.json();
-      saveTokens(data.access, data.refresh);
-      setSuccess('Login successful! You can now navigate to your profile.');
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+    const data = await res.json();
+    saveTokens(data.access, data.refresh);
+    setSuccess('Login successful! You can now navigate to your profile.');
+  } catch (err) {
+    setError(err.message);
+  }
+};
 
   return (
     <div className="form-page-container">
