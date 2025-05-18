@@ -33,6 +33,7 @@ const SignUpPage = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
     });
+    // console.log("result is here", res)
 
     if (!res.ok) throw new Error(`Signup failed: ${res.status}`);
     setSuccess('Signup successful! Please log in.');
