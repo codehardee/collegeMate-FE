@@ -4,8 +4,12 @@ import React, { useState } from 'react';
 import { saveTokens } from '../authHelpers';
 import './SignUpLoginPage.css';
 
+import { useNavigate } from 'react-router-dom';
+
+
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 const LoginPage = () => {
   const [studentId, setStudentId] = useState('');
@@ -13,10 +17,12 @@ const LoginPage = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError('');
-  setSuccess('');
+    e.preventDefault();
+    setError('');
+    setSuccess('');
 
   try {
     const res = await fetch(`${BASE_URL}/api/token/`, {
@@ -30,6 +36,11 @@ const LoginPage = () => {
     const data = await res.json();
     saveTokens(data.access, data.refresh);
     setSuccess('Login successful! You can now navigate to your profile.');
+
+    setTimeout(() => {
+      navigate('/');
+    }, 1000);
+
   } catch (err) {
     setError(err.message);
   }

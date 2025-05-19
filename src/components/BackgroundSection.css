@@ -4,7 +4,7 @@
     width: 80%;
     left: 10%;
     top: 5%;
-    height: 96vh; /* Adjust height as needed */
+    min-height: 96vh; /* Adjust height as needed */
     background-image: url('cm7.png'); /* Replace with your background image URL */
     background-size: cover;
     background-position: center;
@@ -96,21 +96,129 @@
     margin-top: 10px; 
   }
   
-  
-  @media (max-width: 768px) {
-    .cards {
-      flex-direction: column;
-      width: 90%; /* Adjust for smaller screens */
-      gap: 1rem;
-    }
-  
-    .card {
-      flex: 1 1 100%; /* Make cards stack on smaller screens */
-    }
+  @media (max-width: 1024px) {
+  .overlay h2 {
+    font-size: 2.8rem;
   }
-  
-  
-  .card:hover {
-    transform: scale(1.05);
+
+  .overlay p {
+    font-size: 1.1rem;
   }
+
+  .cards {
+    top: 65%;
+    gap: 2rem;
+  }
+
+  .card h3 {
+    font-size: 1.6rem;
+  }
+
+  .card p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .background-section {
+    height: auto;
+    padding-bottom: 3rem;
+    width: 100%;
+    left: 0;
+  }
+
+  .overlay {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
+    text-align: left;
+  }
+
+  .overlay h2 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .overlay p {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .cards {
+    flex-direction: column;
+    position: static;
+    margin-top: 2rem;
+    width: 90%;
+    padding: 0 1rem;
+    transform: none;
+  }
+
+  .card {
+    flex: 1 1 100%;
+  }
+
+  .card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+  }
+
+  .card p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .overlay h2 {
+    font-size: 1.8rem;
+  }
+
+  .overlay p {
+    font-size: 0.95rem;
+  }
+
+  .card h3 {
+    font-size: 1.2rem;
+  }
+
+  .card p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .background-section {
+    height: auto;
+    padding: 2rem 1rem;
+    width: 100%;
+    left: 0;
+    position: relative;
+  }
+
+  .overlay {
+    position: static; /* ✅ This is crucial */
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    text-align: left;
+    width: 100%;
+  }
+
+  .cards {
+    position: static; /* ✅ Also important */
+    margin-top: 2rem;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+    padding: 0;
+    transform: none;
+  }
+
+  .card {
+    width: 100%;
+    flex: 1 1 auto;
+    padding: 1rem;
+  }
+}
+
+
   

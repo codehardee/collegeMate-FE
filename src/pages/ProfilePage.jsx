@@ -3,6 +3,10 @@ import './ProfilePage.css';
 import Navbar from "../components/NavBar";
 import { getAccessToken } from '../authHelpers';
 
+
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+
 const ProfilePage = () => {
   const [formData, setFormData] = useState({
     unique_student_id: '',
@@ -26,7 +30,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await fetch('http://127.0.0.1:8000/api/userProfile/me/', {
+        const res = await fetch(`${BASE_URL}/api/userProfile/me/`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
@@ -74,7 +78,7 @@ const ProfilePage = () => {
     if (certificate) form.append('certificate', certificate);
 
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/userProfile/profiles/${profileId}/`, {
+      const res = await fetch(`${BASE_URL}/api/userProfile/profiles/${profileId}/`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -109,7 +113,7 @@ const ProfilePage = () => {
             <p><strong>Social Media:</strong> {userProfile.social_media}</p>
             {userProfile.profile_picture && (
               <img
-                src={`http://127.0.0.1:8000${userProfile.profile_picture}`}
+                src={`${BASE_URL}${userProfile.profile_picture}`}
                 alt="Profile"
                 width="150"
                 style={{ marginTop: '10px' }}

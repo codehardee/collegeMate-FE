@@ -4,6 +4,8 @@ import './ProjectPage.css';
 import Navbar from "../components/NavBar";
 import { AUTH_TOKEN } from '../authToken';
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 const ProjectPage = () => {
   const [projects, setProjects] = useState([]);
@@ -23,7 +25,7 @@ const ProjectPage = () => {
   useEffect(() => {
     console.log("🔐 Token being sent:");
     console.log("🔐 Token being sent:", token);
-    fetch('http://127.0.0.1:8000/api/uploadProject/projects/', {
+    fetch(`${BASE_URL}/api/uploadProject/projects/`, {
       headers: { 'Authorization': `Bearer ${token}` },
     })
       .then(res => res.json())
@@ -51,7 +53,7 @@ const ProjectPage = () => {
     setError(null);
 
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/uploadProject/projects/', {
+      const res = await fetch(`${BASE_URL}/api/uploadProject/projects/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

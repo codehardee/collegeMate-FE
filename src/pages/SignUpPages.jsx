@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import './SignUpLoginPage.css';
 
+import { useNavigate } from 'react-router-dom';
+
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -17,6 +19,9 @@ const SignUpPage = () => {
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  const navigate = useNavigate();
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,6 +42,11 @@ const SignUpPage = () => {
 
     if (!res.ok) throw new Error(`Signup failed: ${res.status}`);
     setSuccess('Signup successful! Please log in.');
+
+    setTimeout(() => {
+      navigate('/login');
+    }, 1000);
+    
   } catch (err) {
     setError(err.message);
   }
