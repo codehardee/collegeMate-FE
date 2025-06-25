@@ -29,11 +29,18 @@ const LoginPage = () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ student_id: studentId, password }),
+
+      // body: JSON.stringify({ student_id: studentId, password }),
     });
 
     if (!res.ok) throw new Error(`Login failed: ${res.status}`);
 
     const data = await res.json();
+    console.log("🎟️ Tokens received:", data);
+    
+    if (!data.access || !data.refresh) {
+      throw new Error('Login failed: Invalid token response from server.');
+    }
     saveTokens(data.access, data.refresh);
     setSuccess('Login successful! You can now navigate to your profile.');
 

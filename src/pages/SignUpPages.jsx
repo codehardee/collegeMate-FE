@@ -28,28 +28,28 @@ const SignUpPage = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError('');
-  setSuccess('');
+    e.preventDefault();
+    setError('');
+    setSuccess('');
 
-  try {
-    const res = await fetch(`${BASE_URL}/api/authentication/signup/`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    });
-    // console.log("result is here", res)
+    try {
+      const res = await fetch(`${BASE_URL}/api/authentication/signup/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      // console.log("result is here", res)
 
-    if (!res.ok) throw new Error(`Signup failed: ${res.status}`);
-    setSuccess('Signup successful! Please log in.');
+      if (!res.ok) throw new Error(`Signup failed: ${res.status}`);
+      setSuccess('Signup successful! Please log in.');
 
-    setTimeout(() => {
-      navigate('/login');
-    }, 1000);
-    
-  } catch (err) {
-    setError(err.message);
-  }
+      setTimeout(() => {
+        navigate('/login');
+      }, 1000);
+      
+    } catch (err) {
+      setError(err.message);
+    }
 };
 
 

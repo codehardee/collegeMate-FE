@@ -167,6 +167,27 @@ textarea::placeholder {
   }
 }
 
+.unauthenticated-message {
+  padding: 3rem;
+  text-align: center;
+  color: #444;
+}
+
+.unauthenticated-message .btn {
+  padding: 0.5rem 1.2rem;
+  text-decoration: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+}
+
+.unauthenticated-message .btn-outline {
+  background-color: transparent;
+  color: #007bff;
+  border: 2px solid #007bff;
+}
+
+
 /* 📱 Tablets (≤ 768px) */
 @media (max-width: 768px) {
   .projects-page {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './BidPage.css';
 import Navbar from "../components/NavBar";
-import { AUTH_TOKEN } from '../authToken';
+// import { AUTH_TOKEN } from '../authToken';
 import { useLocation } from 'react-router-dom';
 
 

@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './ProfilePage.css';
 import Navbar from "../components/NavBar";
 import { getAccessToken } from '../authHelpers';
+import withAuth from '../withAuth';
+
+
+import { Link } from 'react-router-dom';
 
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -25,7 +29,23 @@ const ProfilePage = () => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
 
-  const token = getAccessToken();
+ 
+  const token = localStorage.getItem('access_token');
+
+  console.log("token is here........", token)
+  if (!token) {
+      console.log("inside the if statement!!!!!!!!!!!!!")
+      return (
+        <div className="unauthenticated-message">
+          <h2>🔒 You must be logged in to access or update your profile</h2>
+          <p>Please log in or register to create or modify your profile.</p>
+          <div style={{ marginTop: "1rem" }}>
+            <Link to="/login" className="btn">Login</Link>
+            <Link to="/signup" className="btn btn-outline" style={{ marginLeft: "1rem" }}>Register</Link>
+          </div>
+        </div>
+      );
+  }
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -163,4 +183,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default withAuth(ProfilePage);

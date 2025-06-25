@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '../components/NavBar';
 import './ProjectPage.css'; 
-import { AUTH_TOKEN } from '../authToken';
+// import { AUTH_TOKEN } from '../authToken';
 
 const ProjectDetailPage = () => {
   const { id } = useParams();

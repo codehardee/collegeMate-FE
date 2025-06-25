@@ -4,6 +4,9 @@ import "./Home.css";
 import CategoryGrid from "../components/CategoryGrid";
 import BackgroundSection from "../components/BackgroundSection";
 
+
+import withAuth from '../withAuth';
+
 const Home = () => {
   return (
     <div className="home">

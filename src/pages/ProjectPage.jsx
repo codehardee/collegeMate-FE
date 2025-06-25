@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './ProjectPage.css';
 import Navbar from "../components/NavBar";
-import { AUTH_TOKEN } from '../authToken';
+import withAuth from '../withAuth';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-
-const ProjectPage = () => {
+const ProjectPage = ({ isAuthenticated }) => {
   const [projects, setProjects] = useState([]);
   const [expandedProjects, setExpandedProjects] = useState([]);
   const [showPostModal, setShowPostModal] = useState(false);
@@ -19,28 +18,38 @@ const ProjectPage = () => {
     description: '',
   });
   const [error, setError] = useState(null);
-  const token = AUTH_TOKEN;
+  const token = isAuthenticated ? localStorage.getItem('accessToken') : null;
 
+  console.log("authneticated or not", isAuthenticated)
+
+  console.log("local storage data", localStorage)
+
+  console.log("token.....................", localStorage.getItem('accessToken'))
+   
+  console.log("🛂 Access Token used:", token);
   // ✅ Fetch projects on load
   useEffect(() => {
-    console.log("🔐 Token being sent:");
-    console.log("🔐 Token being sent:", token);
+    // const token = isAuthenticated ? localStorage.getItem('access_token') : null;
+    // if (!token) {
+    //   console.log("⚠️ No token found. Skipping project fetch.");
+    //   return;
+    // }
+    // console.log("🛂 Access Token used:", token);
+    const token = isAuthenticated ? localStorage.getItem('accessToken') : null;
+
+    console.log("🛂 Token being used:", token);
+
+    const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+
     fetch(`${BASE_URL}/api/uploadProject/projects/`, {
-      headers: { 'Authorization': `Bearer ${token}` },
+      headers: headers,
     })
       .then(res => res.json())
-      .then(data => setProjects(data))
-      .catch(err => console.error(err));
-  }, []);
-
-  // ✅ Toggle Read More / Show Less
-  // const toggleReadMore = (projectId) => {
-  //   if (expandedProjects.includes(projectId)) {
-  //     setExpandedProjects(expandedProjects.filter(id => id !== projectId));
-  //   } else {
-  //     setExpandedProjects([...expandedProjects, projectId]);
-  //   }
-  // };
+      .then(data => {
+        console.log("📦 Projects received from backend:", data),
+        setProjects(data)})
+      .catch(err => console.error("Error fetching projects:",err));
+  }, [isAuthenticated]);
 
   // ✅ Handle form input change
   const handleChange = (e) => {
@@ -78,9 +87,17 @@ const ProjectPage = () => {
       <Navbar />
       <div className="projects-page">
         <h1 className="page-title">📂 Projects</h1>
-        <button className="post-project-button" onClick={() => setShowPostModal(true)}>
-          + Post New Project
-        </button>
+
+        {/* 🔐 Post button or login prompt */}
+        {isAuthenticated ? (
+          <button className="post-project-button" onClick={() => setShowPostModal(true)}>
+            + Post New Project
+          </button>
+        ) : (
+          <p style={{ fontStyle: 'italic', color: 'gray' }}>
+            🔒 Log in to post a new project
+          </p>
+        )}
 
         <div className="projects-grid">
           {projects.map((project) => (
@@ -91,22 +108,30 @@ const ProjectPage = () => {
                   ? project.description
                   : `${project.description.slice(0, 150)}...`}
               </p>
-           
+
               <div className="button-group">
                 <Link to={`/projects/${project.id}`} className="btn">
                   View Details
                 </Link>
-                <Link to={`/bid?project_id=${project.id}`} className="btn btn-outline">
-                  Bid Now
-                </Link>
-              </div>
 
+                {/* 🔐 Bid button */}
+                {isAuthenticated ? (
+                  <Link to={`/bid?project_id=${project.id}`} className="btn btn-outline">
+                    Bid Now
+                  </Link>
+                ) : (
+                  <button className="btn btn-outline" disabled title="Login to bid">
+                    Bid Now 🔒
+                  </button>
+                )}
+              </div>
             </div>
           ))}
         </div>
       </div>
 
-      {showPostModal && (
+      {/* 🔐 Modal to post new project */}
+      {isAuthenticated && showPostModal && (
         <div className="modal-backdrop">
           <div className="modal-content">
             <button className="close-button" onClick={() => setShowPostModal(false)}>✖</button>
@@ -144,4 +169,4 @@ const ProjectPage = () => {
   );
 };
 
-export default ProjectPage;
+export default withAuth(ProjectPage);
