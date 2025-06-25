@@ -4,13 +4,15 @@ import Navbar from '../components/NavBar';
 import './ProjectPage.css'; 
 // import { AUTH_TOKEN } from '../authToken';
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const ProjectDetailPage = () => {
   const { id } = useParams();
   const [project, setProject] = useState(null);
   const token = AUTH_TOKEN;
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/api/uploadProject/projects/${id}/`, {
+    fetch(`${BASE_URL}/api/uploadProject/projects/${id}/`, {
       headers: { 'Authorization': `Bearer ${token}` },
     })
       .then(res => res.json())
